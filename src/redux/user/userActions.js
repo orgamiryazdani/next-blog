@@ -52,7 +52,7 @@ export const userSignin = (data) => {
     return (dispatch) => {
         dispatch(signinUsersRequest());
         http
-            .get("/user/signin", data, { withCredentials: true })
+            .post("/user/signin", data, { withCredentials: true })
             .then((response) => {
                 dispatch(signinUsersSuccess(response.data));
             })
@@ -66,9 +66,10 @@ export const userSignup = (data) => {
     return (dispatch) => {
         dispatch(signupUsersRequest());
         http
-            .get("/user/signup", data, { withCredentials: true })
+            .post("/user/signup", data, { withCredentials: true })
             .then((response) => {
                 dispatch(signupUsersSuccess(response.data));
+                dispatch(signinUsersSuccess(response.data));
             })
             .catch((error) => {
                 dispatch(signupUsersFailure(error.message));

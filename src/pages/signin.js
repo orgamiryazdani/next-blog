@@ -9,6 +9,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useAuth, useAuthActions } from "@/context/AuthContext";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { userSignin } from "src/redux/user/userActions";
 
 const initialValues = {
     email: "",
@@ -26,12 +28,12 @@ const validationSchema = Yup.object({
 
 const RegisterForm = () => {
     const router = useRouter()
-    const dispatch = useAuthActions()
-    const { user } = useAuth()
+    const dispatch = useDispatch()
+    const userInfo = useSelector((state) => state.userSignin)
+    const { user } = userInfo
 
     const onSubmit = (values) => {
-        const { email, password } = values;
-        dispatch({ type: "SIGNIN", payload: values })
+        dispatch(userSignin(values))
     }
 
     const formik = useFormik({
@@ -41,11 +43,11 @@ const RegisterForm = () => {
         validateOnMount: true,
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         if (user) {
             router.push('/')
         }
-    },[user])
+    }, [user])
 
     return (
         <Layout>

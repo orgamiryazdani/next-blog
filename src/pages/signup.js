@@ -6,7 +6,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useAuth, useAuthActions } from "@/context/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import { userSignup } from "src/redux/user/userActions";
 
 const initialValues = {
     name: "",
@@ -35,9 +36,10 @@ const validationSchema = Yup.object({
 });
 
 const RegisterForm = () => {
-    const dispatch = useAuthActions()
     const router = useRouter()
-    const { user } = useAuth()
+    const dispatch = useDispatch()
+    const userInfo = useSelector((state) => state.userSignin)
+    const { user } = userInfo
 
     useEffect(() => {
         if (user) {
@@ -47,7 +49,8 @@ const RegisterForm = () => {
 
     const onSubmit = (values) => {
         const { name, email, phoneNumber, password } = values;
-        dispatch({ type: "SIGNUP", payload: { name, email, phoneNumber, password } })
+        // dispatch()
+        dispatch(userSignup({ name, email, phoneNumber, password }))
     };
 
     const formik = useFormik({

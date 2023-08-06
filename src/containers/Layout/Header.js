@@ -1,9 +1,11 @@
-import { useAuth, useAuthActions } from "@/context/AuthContext";
+import { useAuthActions } from "@/context/AuthContext";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const dispatch = useAuthActions()
-  const { user, loading } = useAuth()
+  const userInfo = useSelector((state) => state.userSignin);
+  const { user, loading } = userInfo;
   return (
     <header className='bg-white shadow-md py-2 mb-8 sticky top-0 z-40'>
       <div
