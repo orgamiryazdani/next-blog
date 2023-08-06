@@ -1,12 +1,12 @@
 import '../../styles/globals.css'
-import AuthProvider from '@/context/AuthContext';
 import { Toaster } from "react-hot-toast";
+import { wrapper } from 'src/redux/store';
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return <>
-    <AuthProvider>
-      <Component {...pageProps} />
-      <Toaster />
-    </AuthProvider>
+    <Component {...pageProps} />
+    <Toaster />
   </>
 }
+
+export default wrapper.withRedux(App)
