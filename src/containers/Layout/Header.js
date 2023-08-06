@@ -1,9 +1,9 @@
-import { useAuthActions } from "@/context/AuthContext";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { signout } from "src/redux/user/userActions";
 
 const Header = () => {
-  const dispatch = useAuthActions()
+  const dispatch = useDispatch()
   const userInfo = useSelector((state) => state.userSignin);
   const { user, loading } = userInfo;
   return (
@@ -28,7 +28,7 @@ const Header = () => {
             {user ? (
               <>
                 <button
-                  onClick={() => dispatch({ type: "SIGNOUT" })}
+                  onClick={() => dispatch(signout())}
                   className="bg-red-400 px-2 py-1 rounded text-red-100">خروج</button>
                 <Link href="/profile" legacyBehavior>
                   <a className="block py-2">profile - <span className="text-sm">{user.name}</span></a>

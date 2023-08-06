@@ -1,8 +1,8 @@
-import axios from "axios";
 import { createContext, useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useReducerAsync } from "use-reducer-async";
 import Router from "next/router";
+import http from "@/services/httpService";
 
 const AuthContext = createContext();
 const AuthContextDispatcher = createContext()
@@ -21,7 +21,7 @@ const reducer = (state, action) => {
 const asyncActionHandlers = {
     SIGNIN: ({ dispatch }) => (action) => {
         dispatch({ type: "SIGNIN_PENDING" });
-        axios.post('http://localhost:5000/api/user/signin', action.payload, { withCredentials: true })
+        http.post('/user/signin', action.payload, { withCredentials: true })
             .then(({ data }) => {
                 toast.success('به برنامه با موفقیت وارد شدید');
                 dispatch({ type: "SIGNIN_SUCCESS", payload: data });
@@ -34,7 +34,7 @@ const asyncActionHandlers = {
     },
     SIGNUP: ({ dispatch }) => (action) => {
         dispatch({ type: "SIGNIN_PENDING" });
-        axios.post('http://localhost:5000/api/user/signup', action.payload, { withCredentials: true })
+        http.post('/user/signup', action.payload, { withCredentials: true })
             .then(({ data }) => {
                 toast.success('به برنامه با موفقیت وارد شدید');
                 dispatch({ type: "SIGNIN_SUCCESS", payload: data });
@@ -47,7 +47,7 @@ const asyncActionHandlers = {
     },
     LOAD_USER: ({ dispatch }) => (action) => {
         dispatch({ type: "SIGNIN_PENDING" });
-        axios.get('http://localhost:5000/api/user/load', { withCredentials: true })
+        http.get('/user/load', { withCredentials: true })
             .then(({ data }) => {
                 dispatch({ type: "SIGNIN_SUCCESS", payload: data });
             })
@@ -56,7 +56,7 @@ const asyncActionHandlers = {
             })
     },
     SIGNOUT: ({ dispatch }) => (action) => {
-        axios.get('http://localhost:5000/api/user/logout', { withCredentials: true })
+        http.get('/user/logout', { withCredentials: true })
             .then(({ data }) => {
                 window.location.href = '/'
             })
