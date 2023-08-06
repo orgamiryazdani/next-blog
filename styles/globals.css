@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("font.css");
+
+html,
+body {
+  font-family: "vazir";
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button:disabled {
+  background-color: #ddd;
+  color: #444;
+  cursor: not-allowed;
+}
